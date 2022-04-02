@@ -34,6 +34,43 @@ source("./distribution_functions.R")
 
 ### Parámetros de estilo
 
+Todas las funciones cuenta con los siguientes dos parámetros: `fill`, `color`. `fill` determina el color interior de la distribución, mientras `color` determina el color del borde de la gráfica.
+
+Estos están predeterminados a gris y negro si no se especifican. Estos son de tipo string y aceptan nombre de colores ya dados en R o en formato hexadecimal.
+
+
+> Uso con colores predeterminados de R
+
+```{r}
+plot_normal_distribution(fill = "orange", color = "green")
+```
+
+
+> Uso con hexadecimal 
+
+```{r}
+plot_normal_distribution(fill = "#ebbd34", color = "#34eb37")
+```
+
+
 ### Uso de las funciones
 
+Todas las gráficas contienen una línea punteada que representa la media a fin de agregar información. Además, si se quiere saber el listado de funciones, solo ponga `plot_` y presione la tecla tab a fin de ver el listado. 
 
+> *Distribución normal*
+
+Toma `mean` como media y `sd` como desviación estándar; estos están como 0 y 1, respectivamente.
+
+```{r}
+plot_normal_distribution(mean = 2, sd = 2)
+```
+
+### Uso de las funciones
+
+> *Distribución gamma*
+
+Toma `alpha` como alpha y `beta` como beta; estos están como 2 y 2, respectivamente.
+
+```{r}
+plot_gamma_distribution(alpha = 2, beta = 4)
+```

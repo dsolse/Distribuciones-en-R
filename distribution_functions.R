@@ -2,11 +2,7 @@ library(ggplot2)
 library(extraDistr)
 
 
-# Definición de función normal
-
-
-
-get_theme_graph <- function(fill="gray", color="black"){
+get_theme_graph <- function(color="black"){
   theme_graphs =  theme(plot.title = element_text(hjust = 0.5), 
                         axis.title.x = element_text(face="bold", colour=color, size = 12),
                         axis.title.y = element_text(face="bold", colour=color, size = 12),
@@ -14,8 +10,9 @@ get_theme_graph <- function(fill="gray", color="black"){
   return(theme_graphs)
 }
 
-
-plot_normal_distribution <- function(mean = 0, sd = 1) {
+# Definición de función normal
+plot_normal_distribution <- function(mean = 0, sd = 1, fill="gray", color="black") {
+  
   # Cálculo de los límites de x desde de la gráfica
   # usando teorema de Chebyshev: z = 4
   lim_inf <- -4 * sd + mean
@@ -28,23 +25,24 @@ plot_normal_distribution <- function(mean = 0, sd = 1) {
     xlim(c(lim_inf, lim_sup)) + # limites de x desde donde se grafica
     stat_function(
       fun=dnorm, args=list(mean=mean, sd=sd),
-      color="white",
-      fill = "orange",
+      color=color,
+      fill = fill,
       geom="area"
       ) +
-    get_theme_graph() + 
+    get_theme_graph(color) + 
     labs(y="f(x)", x="x", title = title) +
-    geom_vline(xintercept = mean, color="black", linetype="dotted")
+    geom_vline(xintercept = mean, color=color, linetype="dotted")
 }
 
 
 # Distribución gamma
-plot_gamma_distribution <- function(alpha=2, beta=2) {
+plot_gamma_distribution <- function(alpha=2, beta=2, fill="gray", color="black") {
+  
   # Cálculo de los límites  de x de la gráfica
   # encontrando donde la distribución es 0.01 y 0.99
   # qgamma retorna valor de x dada un área de probabilidad
   lim_inf <-  qgamma(.01, shape = alpha, rate = (1 / beta))
-  lim_sup <-  qgamma(.99, shape = alpha, rate = (1 / beta))
+  lim_sup <-  qgamma(.999, shape = alpha, rate = (1 / beta))
   
   offset = (lim_sup - lim_inf) / 4
   
@@ -57,20 +55,21 @@ plot_gamma_distribution <- function(alpha=2, beta=2) {
       fun=dgamma, 
       args=list(shape = alpha, rate = (1 / beta)),
       geom="area", 
-      fill ="orange") +
+      color=color,
+      fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
          title = title) + 
-    get_theme_graph() +
-    geom_vline(xintercept = alpha*beta, color="black", linetype="dotted")
+    get_theme_graph(color) +
+    geom_vline(xintercept = alpha*beta, color=color, linetype="dotted")
 }
 
 # Distribución exponencial
-plot_exponential_distribution <- function(beta=2) {
+plot_exponential_distribution <- function(beta=2, fill="gray", color="black") {
   # Cálculo de los límites  de x de la gráfica
   # encontrando donde la distribución es 0.01 y 0.99
   # qgamma retorna valor de x dada un área de probabilidad
   lim_inf <-  qexp(.01, rate = (1 / beta))
-  lim_sup <-  qexp(.99, rate = (1 / beta))
+  lim_sup <-  qexp(.999, rate = (1 / beta))
   
   offset = (lim_sup - lim_inf) / 4
   
@@ -82,16 +81,17 @@ plot_exponential_distribution <- function(beta=2) {
     stat_function(
       fun = dexp, 
       args=list(rate = (1 / beta)),
+      color=color,
       geom = "area", 
-      fill ="orange") +
+      fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
          title = title) + 
     get_theme_graph() +
-    geom_vline(xintercept = beta, color="black", linetype="dotted")
+    geom_vline(xintercept = beta, color=color, linetype="dotted")
 }
 
 # Distribución triangular
-plot_triangular_distribution <- function(min=0, max=2, mode=1) {
+plot_triangular_distribution <- function(min=0, max=2, mode=1, fill="gray", color="black") {
   # Cálculo de los límites  de x de la gráfica
   # encontrando donde la distribución es 0.01 y 0.99
   # qgamma retorna valor de x dada un área de probabilidad
@@ -108,17 +108,18 @@ plot_triangular_distribution <- function(min=0, max=2, mode=1) {
     stat_function(
       fun = dtriang, 
       args=list(a = min, b=max, c=mode),
-      geom = "area", 
-      fill ="orange") +
+      geom = "area",
+      color=color,
+      fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
          title = title) + 
     get_theme_graph() +
-    geom_vline(xintercept = (max + min + mode) /3, color="black", linetype="dotted")
+    geom_vline(xintercept = (max + min + mode) /3, color=color, linetype="dotted")
 }
 
 
 # Distribución beta
-plot_beta_distribution <- function(alpha=2, beta=2) {
+plot_beta_distribution <- function(alpha=2, beta=2, fill="gray", color="black") {
   # Cálculo de los límites  de x de la gráfica
   # encontrando donde la distribución es 0.01 y 0.99
   # qgamma retorna valor de x dada un área de probabilidad
@@ -136,15 +137,16 @@ plot_beta_distribution <- function(alpha=2, beta=2) {
       fun=dbeta, 
       args=list(shape1 = alpha, shape2 = beta),
       geom="area", 
-      fill ="orange") +
+      color=color,
+      fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
          title = title) + 
     get_theme_graph() +
-    geom_vline(xintercept = alpha/ (beta + alpha), color="black", linetype="dotted")
+    geom_vline(xintercept = alpha/ (beta + alpha), color=color, linetype="dotted")
 }
 
 # Distribución Weibull
-plot_weibull_distribution <- function(alpha=1, beta=2) {
+plot_weibull_distribution <- function(alpha=1, beta=2, fill="gray", color="black") {
   # Cálculo de los límites  de x de la gráfica
   # encontrando donde la distribución es 0.01 y 0.99
   # qgamma retorna valor de x dada un área de probabilidad
@@ -162,7 +164,8 @@ plot_weibull_distribution <- function(alpha=1, beta=2) {
       fun=dweibull, 
       args=list(shape = beta, scale = alpha),
       geom="area", 
-      fill ="orange") +
+      color=color,
+      fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
          title = title) + 
     get_theme_graph() 
