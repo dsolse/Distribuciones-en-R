@@ -1,0 +1,39 @@
+---
+title: "Manual de uso del programa"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+El siguiente programa brinda un set de funciones para graficar las distribuciones de probabilidad. Aqui esta la lista de estas:
+
+1. Distribución uniforme
+2. Distribución triangular
+3. Distribución normal
+4. Distribución gamma
+5. Distribución exponencial
+6. Distribución beta
+7. Distribución de Weibull
+8. Distribución LogNormal
+9. Distribución Erlanglar
+
+### Instalación
+
+#### 1) Descargar las siguientes dependencias
+
+1. [ggplot2](https://ggplot2.tidyverse.org/)
+2. [extraDistr](https://cran.r-project.org/web/packages/extraDistr/index.html)
+
+#### 2) Importar funciones desde el archivo
+
+```{r, warning=FALSE}
+source("./distribution_functions.R")
+```
+
+### Parámetros de estilo
+
+### Uso de las funciones
+
+
