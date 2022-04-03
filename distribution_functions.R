@@ -201,12 +201,12 @@ plot_uniform_distribution <- function(alpha=0, beta=2, fill="gray", color="black
 
 
 # Distribuci?n Weibull
-plot_erlang_distribution <- function(alpha=1, beta=2, fill="gray", color="black") {
+plot_erlang_distribution <- function(k=1, lambda=2, fill="gray", color="black") {
   # C?lculo de los l?mites  de x de la gr?fica
   # encontrando donde la distribuci?n es 0.01 y 0.99
   # qgamma retorna valor de x dada un ?rea de probabilidad
-  lim_inf <-  derl(.01, shape = beta, scale = alpha)
-  lim_sup <-  qweibull(.99, shape = beta, scale = alpha)
+  lim_inf <-  dgamma(.01, shape = beta, scale = alpha)
+  lim_sup <-  dgamma(.99, shape = beta, scale = alpha)
   
   offset = (lim_sup - lim_inf) / 4
   
@@ -233,14 +233,41 @@ plot_erlang_distribution <- function(r=2, lambda=2, fill="gray", color="black") 
   # C?lculo de los l?mites  de x de la gr?fica
   # encontrando donde la distribuci?n es 0.01 y 0.99
   # qgamma retorna valor de x dada un ?rea de probabilidad
-  lim_inf <-  rg(.01, meanlog = meanlog, sdlog =  sdlog)
+  lim_inf <-  qgamma(.01, shape = r, rate = (1 / lambda))
+  lim_sup <-  qgamma(.999, shape = r, rate = (1 / lambda))
+  
+  offset = (lim_sup - lim_inf) / 4
+  
+  title = paste(c("Distribuci?n gamma, alpha", alpha, ", beta", beta), collapse = " ")
+  
+  # Graficaci?n
+  ggplot() + 
+    xlim(c(lim_inf - offset, lim_sup + offset)) + 
+    stat_function(
+      fun=dgamma, 
+      args=list(shape = r, rate = (1 / lambda)),
+      geom="area", 
+      color=color,
+      fill =fill) +
+    labs(x = "\n x", y = "f(x) \n", 
+         title = title) + 
+    get_theme_graph(color) +
+    geom_vline(xintercept = lambda*r, color=color, linetype="dotted")
+}
+
+#Distribución LogNormal
+plot_lognormal_distribution <- function(meanlog=2, sdlog=2, fill="gray", color="black") {
+  # C?lculo de los l?mites  de x de la gr?fica
+  # encontrando donde la distribuci?n es 0.01 y 0.99
+  # qgamma retorna valor de x dada un ?rea de probabilidad
+  lim_inf <-  qlnorm(.01, meanlog = meanlog, sdlog =  sdlog)
   lim_sup <-  qlnorm(.99, meanlog = meanlog, sdlog =  sdlog)
   
   
   
   offset <- (lim_sup - lim_inf) / 4
   
-  title = paste(c("Distribuci?n gamma, alpha", ", beta"), collapse = " ")
+  title = paste(c("Distribución LogNormal"), collapse = " ")
   
   # Graficaci?n
   ggplot() + 
@@ -252,8 +279,7 @@ plot_erlang_distribution <- function(r=2, lambda=2, fill="gray", color="black") 
       color=color,
       fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
-         title = title) + 
-    get_theme_graph() +
+         title = title)  + get_theme_graph(fill=fill, color = color) +
     geom_vline(xintercept = meanlog, color=color, linetype="dotted")
 }
 
