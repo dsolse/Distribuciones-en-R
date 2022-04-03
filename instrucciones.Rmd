@@ -65,7 +65,6 @@ Toma `mean` como media y `sd` como desviación estándar; estos están como 0 y 
 plot_normal_distribution(mean = 2, sd = 2)
 ```
 
-### Uso de las funciones
 
 > *Distribución gamma*
 
