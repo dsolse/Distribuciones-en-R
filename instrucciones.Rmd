@@ -17,7 +17,7 @@ El siguiente programa brinda un set de funciones para graficar las distribucione
 6. Distribución beta
 7. Distribución de Weibull
 8. Distribución LogNormal
-9. Distribución Erlanglar
+9. Distribución Erlang
 
 ### Instalación
 
@@ -57,12 +57,22 @@ plot_normal_distribution(fill = "#ebbd34", color = "#34eb37")
 
 Todas las gráficas contienen una línea punteada que representa la media a fin de agregar información. Además, si se quiere saber el listado de funciones, solo ponga `plot_` y presione la tecla tab a fin de ver el listado. 
 
-> *Distribución normal*
+> *Distribución uniforme*
 
-Toma `mean` como media y `sd` como desviación estándar; estos están como 0 y 1, respectivamente.
+Toma `alpha` como el mínimo valor y `beta` el máximo valor en x; estos están como 0 y 2, respectivamente.
 
 ```{r}
-plot_normal_distribution(mean = 2, sd = 2)
+plot_uniform_distribution(alpha=2, beta = 4)
+```
+
+
+
+> *Distribución triangular*
+
+Toma `min` como valor mínimo en x y `max` como valor máximo; estos están como 0 y 1, respectivamente.
+
+```{r}
+plot_triangular_distribution(mean = 2, sd = 2)
 ```
 
 
