@@ -232,7 +232,7 @@ plot_lognormal_distribution <- function(meanlog=2, sdlog=2, fill="gray", color="
       color=color,
       fill =fill) +
     labs(x = "\n x", y = "f(x) \n", 
-         title = title)  + get_theme_graph(fill=fill, color = color) +
+         title = title)  + get_theme_graph(color = color) +
     geom_vline(xintercept = meanlog, color=color, linetype="dotted")
 }
 
@@ -248,7 +248,7 @@ plot_erlang_distribution <- function(r=2, lambda=2, fill="gray", color="black") 
   
   offset = (lim_sup - lim_inf) / 4
   
-  title = paste(c("Distribución gamma, alpha", alpha, ", beta", beta), collapse = " ")
+  title = paste(c("Distribución gamma, r", r, ", lambda", lambda), collapse = " ")
   
   # Graficación
   ggplot() + 
